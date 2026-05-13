@@ -476,7 +476,10 @@ async function loadData() {
     const res  = await fetch(CSV_URL);
     const text = await res.text();
     const data = parseCSV(text);
-    allItems   = data.filter(row => row.visible !== 'FALSE' && row.title);
+    allItems = data.filter(row => {
+  const v = (row.visible || '').toString().toUpperCase().trim();
+  return v !== 'FALSE' && v !== '0' && v !== '' && row.title;
+});
     buildFilters(allItems);
     renderCards();
   } catch(e) {
