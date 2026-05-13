@@ -386,7 +386,10 @@ function parseCSV(text) {
     }
     cols.push(cur);
     const obj = {};
-    headers.forEach((h, i) => { obj[h] = (cols[i] || '').trim().replace(/^"|"$/g, ''); });
+    headers.forEach((h, i) => { 
+  const cleanKey = h.replace(/\n.*/g, '').trim();
+  obj[cleanKey] = (cols[i] || '').trim().replace(/^"|"$/g, ''); 
+});
     return obj;
   });
 }
